@@ -37,12 +37,14 @@ test('simple success', t => {
   const email = Email.match('hello@example.com');
 
   t.is(email.value, 'hello@example.com');
+  t.true(email instanceof Email);
 });
 
 test('simple error', t => {
   const email = Email.match('---');
 
   t.is(email.message, 'Wrong email or phone');
+  t.true(email instanceof ContractFailure);
 });
 
 test('Types combination success', t => {
@@ -51,6 +53,7 @@ test('Types combination success', t => {
   const login = Login.match('hello@example.com');
 
   t.is(login.value, 'hello@example.com');
+  t.true(login instanceof Login);
 });
 
 test('Types combination success of the second contract', t => {
@@ -125,4 +128,28 @@ test('Test sum passing context', t => {
   });
 
   A.or(B).match('some val');
+});
+
+test('Test sum multiple', t => {
+  const A = Contract((value, context) => {
+    context.a = 'contract a';
+
+    return new ContractFailure('contract A failed');
+  });
+
+  const B = Contract((value, context) => {
+    t.is(context.a, 'contract a');
+    context.b = 'contract b';
+
+    return new ContractFailure('contract B failed');
+  });
+
+  const C = Contract((value, context) => {
+    t.is(context.a, 'contract a');
+    t.is(context.b, 'contract b');
+  });
+
+  A.or(B)
+    .or(C)
+    .match('some val');
 });

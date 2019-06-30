@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "ava",
+    "watch": "ava --watch --serial --verbose",
     "lint": "eslint ."
   },
   "description": "Blood contracts realisation for NodeJS",
