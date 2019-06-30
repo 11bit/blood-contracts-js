@@ -2,7 +2,8 @@
   "name": "blood-contracts-js",
   "version": "1.0.0",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "lint": "eslint ."
   },
   "description": "Blood contracts realisation for NodeJS",
   "main": "index.js",
@@ -11,6 +12,9 @@
     "ava": "^2.1.0"
   },
   "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2"
   }
 }

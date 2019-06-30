@@ -1,0 +1,28 @@
+{
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+  },
+  "rules": {
+    "arrow-parens": [2, "as-needed"],
+    "object-curly-newline": 0,
+    "function-paren-newline": 0,
+    "prefer-destructuring": 0,
+    "no-restricted-globals": 0,
+    "import/prefer-default-export": 0,
+    "import/no-named-as-default": 0,
+    "comma-dangle": ["error", {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "never"
+    }],
+    "prettier/prettier": "error"
+  },
+}
