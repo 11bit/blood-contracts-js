@@ -62,6 +62,7 @@ test('Types combination success of the second contract', t => {
   const login = Login.match('123456');
 
   t.is(login.value, '123456');
+  t.true(login instanceof Login);
 });
 
 test('Types combination failure of second', t => {
@@ -70,6 +71,7 @@ test('Types combination failure of second', t => {
   const login = Login.match('---');
 
   t.is(login.message, 'Wrong email or phone');
+  t.true(login instanceof ContractFailure);
 });
 
 test('Test pipe', t => {
@@ -78,6 +80,7 @@ test('Test pipe', t => {
   const login = Login.match('hello@example.com');
 
   t.is(login.value, 'hello@example.com');
+  t.true(login instanceof Login);
 });
 
 test('Test pipe failure', t => {
@@ -86,6 +89,7 @@ test('Test pipe failure', t => {
   const login = Login.match('frfr@example.com');
 
   t.is(login.message, 'Email is not for user hello');
+  t.true(login instanceof ContractFailure);
 });
 
 test('Test pipe failure 2', t => {
@@ -152,4 +156,16 @@ test('Test sum multiple', t => {
   A.or(B)
     .or(C)
     .match('some val');
+});
+
+test('Test real error', t => {
+  const A = Contract((value, context) => {
+    context.a = 'contract a';
+
+    undefined.doSomethingWrong();
+  });
+
+  const res = A.match('some');
+
+  t.true(res instanceof ContractFailure);
 });

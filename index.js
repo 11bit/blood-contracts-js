@@ -52,7 +52,12 @@ function Contract(fn) {
     }
 
     match(value) {
-      const res = fn(value, this.context);
+      let res;
+      try {
+        res = fn(value, this.context);
+      } catch (e) {
+        res = new ContractFailure(e.message, this.context);
+      }
 
       if (res instanceof ContractFailure) {
         return res;
